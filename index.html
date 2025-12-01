@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Friendsgiving 2025 - FSJ Solutions</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif;
+            background: linear-gradient(135deg, #3f0f00, #5c1a00, #7a2e00);
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+            color: #ffe6cc;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(to bottom right, #3f0f00, #5c1a00);
+            border-bottom: 2px solid rgba(255,140,0,0.3);
+            box-shadow: 0 0 25px rgba(255,140,0,0.05);
+        }
+
+        header h1 {
+            font-size: clamp(2.2rem, 8vw, 4rem);
+            font-family: 'Georgia', serif;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px #ff8c00;
+            animation: glowTitle 4s ease-in-out infinite;
+        }
+
+        @keyframes glowTitle {
+            0%,100% { text-shadow: 0 0 15px #ff8c00; }
+            50% { text-shadow: 0 0 40px #ff8c00; }
+        }
+
+        header p {
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(100,40,0,0.9);
+            border-radius: 10px;
+            border: 1px solid rgba(255,140,0,0.3);
+            animation: pulseBorder 3s infinite;
+            backdrop-filter: blur(4px);
+        }
+
+        @keyframes pulseBorder {
+            0%,100% { box-shadow: 0 0 10px #ff8c0033; }
+            50% { box-shadow: 0 0 25px #ff8c0099; }
+        }
+
+        .section h2 {
+            margin-top: 0;
+            font-size: 28px;
+            color: #ff8c00;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            padding: 8px 0;
+            font-size: 18px;
+            transition: transform 0.2s ease, color 0.3s;
+        }
+
+        ul li:hover {
+            transform: translateX(1em);
+            color: #ff8c00;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            background: #5c1a00;
+            color: #ffe6cc;
+        }
+
+        #flagsArea {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .flagFloat {
+            position: absolute;
+            width: 2em;
+            height: 1.4em;
+            border-radius: 0.2em;
+            box-shadow: 0 0 0.6em #ff8c0055;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h2>You are invited to...</h2>
+    <h1>Friendsgiving</h1>
+    <h1>Potluck</h1>
+    <p>Date: Saturday 20th December</p>
+    <p>Time: 5pm</p>
+    <p>Location: TBC</p>
+</header>
+
+<div class="container">
+    <div class="section">
+        <h2>Please Bring:</h2>
+        <ul>
+            <li>A traditional dish from a country of your choice <strong>that you and only you can make 👀</strong></li>
+            <li>A game (card game, board game, etc) <strong>No Strip poker Kieran...</strong></li>
+            <li>Drinks</li>
+            <li>A Special Flower/ Herb 🪴</li>
+            <li>Good vibes 🕺🏾</li>
+        </ul>
+    </div>
+</div>
+
+<footer>
+    Coded in Visual Studio Code by yours truly. Built with HTML and CSS, deployed with GitHub.
+</footer>
+
+<div id="flagsArea"></div>
+
+<script>
+    const flags = ['gb','us','ng','jm','gh','za','ca','fr','es','it','in','cn','de','br','ke','tr','jp','kr','au','mx','se','no','fi'];
+    const fa = document.getElementById('flagsArea');
+
+    class Flag {
+        constructor(code) {
+            this.img = document.createElement('img');
+            this.img.src = `https://flagcdn.com/${code}.svg`;
+            this.img.classList.add('flagFloat');
+            this.x = Math.random() * window.innerWidth;
+            this.y = Math.random() * window.innerHeight;
+            this.vx = (Math.random() * 2 + 0.5) * (Math.random() < 0.5 ? 1 : -1);
+            this.vy = (Math.random() * 2 + 0.5) * (Math.random() < 0.5 ? 1 : -1);
+            fa.appendChild(this.img);
+        }
+
+        move() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x <= 0 || this.x + this.img.width >= window.innerWidth) this.vx *= -1;
+            if (this.y <= 0 || this.y + this.img.height >= window.innerHeight) this.vy *= -1;
+            this.img.style.left = this.x + 'px';
+            this.img.style.top = this.y + 'px';
+        }
+    }
+
+    const flagObjects = flags.map(code => new Flag(code));
+
+    function animateFlags() {
+        flagObjects.forEach(f => f.move());
+        requestAnimationFrame(animateFlags);
+    }
+
+    animateFlags();
+</script>
+
+</body>
+</html>
