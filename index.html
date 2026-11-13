@@ -85,8 +85,8 @@ h1{margin:0;font-size:clamp(2.2rem,10.2vw,5.6rem);line-height:.86;font-weight:80
 .steps h3{margin:2px 0 4px;font-size:1.2rem;font-variation-settings:'opsz' 24,'wdth' 90}
 .steps p{margin:0;color:var(--muted)}
 .steps a{font-weight:650}
-.whogate{position:fixed;inset:0;z-index:50;background:var(--sky);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
-.whocard{background:var(--paper);border-radius:22px;padding:32px 30px;max-width:640px;width:100%;box-shadow:0 28px 60px -28px rgba(16,27,51,.45)}
+.whogate{position:fixed;inset:0;z-index:50;background:var(--sky);display:flex;justify-content:center;padding:20px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.whocard{margin:auto;background:var(--paper);border-radius:22px;padding:32px 30px;max-width:640px;width:100%;box-shadow:0 28px 60px -28px rgba(16,27,51,.45)}
 .whocard h2{margin:14px 0 .3em}
 .whogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:22px}
 .whogrid button{cursor:pointer;font:inherit;font-weight:700;font-variation-settings:'wdth' 90;padding:12px 10px 14px;border-radius:12px;
@@ -156,19 +156,6 @@ select{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--
 .stamp span{display:block;font-size:.88rem;font-weight:600;margin-top:3px}
 .stamp .course{margin-top:7px;padding-top:6px;border-top:1px solid currentColor;font-weight:800;font-variation-settings:'wdth' 80}
 
-/* ---------- crew ---------- */
-.crew{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px}
-.pass{background:var(--paper);border-radius:12px;padding:12px;box-shadow:0 1px 0 var(--line)}
-.photo{aspect-ratio:3/4;border-radius:6px;background:#D5DEE9;overflow:hidden;display:flex;align-items:center;justify-content:center;
-  font-size:3rem;font-weight:800;color:var(--blue);font-variation-settings:'opsz' 96,'wdth' 80}
-.photo img{width:100%;height:100%;object-fit:cover}
-.pass b{display:block;margin-top:9px;font-size:1.1rem;font-variation-settings:'wdth' 90}
-.pass small{color:var(--muted)}
-.gallery{display:flex;gap:14px;overflow-x:auto;padding:10px 0 6px;scroll-snap-type:x mandatory}
-.gallery figure{margin:0;flex:0 0 auto;scroll-snap-align:start;width:230px;background:var(--paper);padding:10px 10px 14px;border-radius:6px;box-shadow:0 8px 20px -12px rgba(16,27,51,.5)}
-.gallery img{width:100%;height:270px;object-fit:cover;border-radius:3px;display:block}
-.gallery figcaption{margin-top:8px;font-weight:600;font-size:.95rem}
-
 footer{margin-top:70px;text-align:center;color:var(--muted);padding:0 20px 28px;font-size:.95rem}
 footer .airmail{margin:0 -20px 24px}
 
@@ -184,6 +171,32 @@ footer .airmail{margin:0 -20px 24px}
   .claim{grid-template-columns:1fr}
   .barcode{margin-top:6px}
 }
+@media (max-width:560px){
+  main{padding:0 16px}
+  section{padding-top:40px}
+  h2{font-size:clamp(1.6rem,7.5vw,2.2rem)}
+  .lede{font-size:1rem;margin-bottom:1.1em}
+  .t-main{padding:24px 18px}
+  .steps li{grid-template-columns:38px 1fr;gap:13px;padding:14px 15px}
+  .steps li::before{width:38px;height:38px;font-size:1.05rem}
+  .steps h3{font-size:1.1rem}
+  .board{padding:6px 14px}
+  .stamps{grid-template-columns:repeat(2,1fr);gap:14px 10px;margin-top:20px}
+  .stamp{padding:10px 8px 9px;border-width:2px}
+  .stamp img{width:38px;height:26px;margin-bottom:4px}
+  .stamp .globe{font-size:1.2rem;line-height:26px;margin-bottom:4px}
+  .stamp b{font-size:1rem}
+  .stamp span{font-size:.78rem}
+  .stamp .course{margin-top:5px;padding-top:4px}
+  .youare{padding:14px 16px}
+  .next{padding:14px 16px}
+  .whocard{padding:22px 16px 20px;border-radius:18px}
+  .whocard h2{font-size:1.7rem}
+  .whocard .lede{font-size:1rem;margin-bottom:1em}
+  .whogrid{grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+  .whogrid button{padding:10px 4px 11px;gap:7px;font-size:.95rem;border-radius:10px}
+  .mug{width:56px;height:56px;font-size:1.35rem}
+}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -194,7 +207,7 @@ footer .airmail{margin:0 -20px 24px}
   <div class="whocard">
     <p class="airline"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg> Friendsgiving Airways</p>
     <h2>Who's checking in?</h2>
-    <p class="lede">Tap your face and we'll bring up your course, your teammate and your country.</p>
+    <p class="lede">Tap your face to see your course, teammate and country.</p>
     <div class="whogrid" id="whoGrid"></div>
   </div>
 </div>
@@ -297,16 +310,6 @@ footer .airmail{margin:0 -20px 24px}
     </div>
   </div>
 </section>
-
-<!-- ============ CREW ============ -->
-<section aria-labelledby="crewH">
-  <h2 id="crewH">Who's on the flight</h2>
-  <div class="crew" id="crew"></div>
-  <div id="galWrap" hidden>
-    <h2 style="margin-top:44px">Previous trips</h2>
-    <div class="gallery" id="gallery"></div>
-  </div>
-</section>
 </main>
 
 <footer>
@@ -344,9 +347,6 @@ const GROUPS = [
   {id:"g6", name:"Monty",          course:"dessert", people:["Monty"],  team:"pud"},
   {id:"g7", name:"Anvay",          course:"dessert", people:["Anvay"],  team:"pud"}
 ];
-
-// Photos from past years: {src:"photos/2025.jpg", caption:"Friendsgiving 2025"}
-const GALLERY = [];
 /* ============================================================= */
 
 const courseLabel = {starter:'Starters', main:'Mains', dessert:'Desserts'};
@@ -537,21 +537,29 @@ function draw(now){
       }
     }
   });
-  // who is flying where: one label per country, so groups sharing one are named together
-  ctx.font = '700 13px ' + css('--font');
+  // who is flying where: one label per country, groups sharing one named together,
+  // kept inside the canvas and nudged clear of each other
+  const small = size.w < 520;
+  ctx.font = `700 ${small ? 11 : 13}px ` + css('--font');
   ctx.lineJoin = 'round'; ctx.textAlign = 'center';
   const labels = {};
   Object.values(arcs).forEach(a => {
     if (!labels[a.country]) labels[a.country] = {ll: a.ll, who: []};
     labels[a.country].who.push(a.who);
   });
+  const placed = [];
   Object.entries(labels).forEach(([country, l]) => {
     if (!isVisible(l.ll)) return;
-    const [x, y] = projection(l.ll);
-    const text = `${l.who.join(' & ')} - ${country}`;
+    const p = projection(l.ll); if (!p) return;
+    const text = small ? l.who.join(' & ') : `${l.who.join(' & ')} - ${country}`;
+    const half = ctx.measureText(text).width / 2 + 5;
+    const x = Math.max(half + 2, Math.min(size.w - half - 2, p[0]));
+    let y = p[1] - 12, guard = 0;
+    while (guard++ < 8 && placed.some(q => Math.abs(q.y - y) < 14 && Math.abs(q.x - x) < q.half + half)) y -= 15;
+    placed.push({x, y, half});
     ctx.strokeStyle = COL.ocean; ctx.lineWidth = 3.5;
-    ctx.strokeText(text, x, y - 12);
-    ctx.fillStyle = COL.claimed; ctx.fillText(text, x, y - 12);
+    ctx.strokeText(text, x, y);
+    ctx.fillStyle = COL.claimed; ctx.fillText(text, x, y);
   });
   ctx.textAlign = 'start';
 
@@ -793,24 +801,6 @@ async function doClaim(country){
 }
 $('claimBtn').onclick = () => doClaim($('countrySel').value);
 refresh(); setInterval(refresh, 8000);
-
-/* ---------- crew + gallery ---------- */
-// photos live at photos/<firstname-lowercase>.jpg; missing ones fall back to the initial
-function renderCrew(){
-  $('crew').innerHTML = GROUPS.flatMap(g => g.people.map(n =>
-    `<div class="pass"><div class="photo" data-i="${esc(n[0])}"><img alt="${esc(n)}" src="photos/${n.toLowerCase()}.jpg"></div>` +
-    `<b>${esc(n)}</b></div>`)).join('');
-  document.querySelectorAll('.photo').forEach(ph => {
-    const img = ph.querySelector('img'), fb = () => { ph.textContent = ph.dataset.i; };
-    img.addEventListener('error', fb);
-    if (img.complete && img.naturalWidth === 0) fb();
-  });
-}
-renderCrew();
-if (GALLERY.length) {
-  $('galWrap').hidden = false;
-  $('gallery').innerHTML = GALLERY.map(p => `<figure><img loading="lazy" src="${esc(p.src)}" alt=""><figcaption>${esc(p.caption || '')}</figcaption></figure>`).join('');
-}
 </script>
 </body>
 </html>
