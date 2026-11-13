@@ -1,185 +1,816 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Friendsgiving 2025</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Times New Roman', Times, serif;
-            background: linear-gradient(135deg, #3f0f00, #5c1a00, #7a2e00);
-            background-size: 400% 400%;
-            animation: gradientShift 12s ease infinite;
-            color: #ffe6cc;
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Friendsgiving Potluck · Friday 4th December</title>
+<meta property="og:title" content="Friendsgiving Potluck: your boarding pass" />
+<meta property="og:description" content="Cook a dish from a country you'd love to visit. Friday 4th December, 7pm." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#E6ECF2;      /* page */
+  --paper:#FBFCFD;    /* ticket */
+  --ink:#101B33;      /* text, boards */
+  --blue:#1F4E9E;     /* airmail blue */
+  --red:#D93A2B;      /* airmail red */
+  --signal:#FFC72C;   /* claimed / departure board */
+  --land:#2E4470;
+  --muted:#5B6882;
+  --line:#C3CEDB;
+  --font:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--sky);color:var(--ink);font-family:var(--font);font-size:1.0625rem;line-height:1.55;
+  font-variation-settings:'opsz' 14,'wdth' 100;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+.airmail{height:16px;background:repeating-linear-gradient(135deg,var(--red) 0 20px,var(--paper) 20px 40px,var(--blue) 40px 60px,var(--paper) 60px 80px)}
+main{max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:56px 0 0}
+h2{font-size:clamp(1.9rem,5vw,2.8rem);line-height:1.02;margin:0 0 .4em;font-weight:780;letter-spacing:-.02em;font-variation-settings:'opsz' 60,'wdth' 80}
+.lede{max-width:56ch;margin:0 0 1.4em;color:var(--muted);font-size:1.1rem}
 
-        header {
-            text-align: center;
-            padding: 80px 20px;
-            background: linear-gradient(to bottom right, #3f0f00, #5c1a00);
-            border-bottom: 2px solid rgba(255,140,0,0.3);
-            box-shadow: 0 0 25px rgba(255,140,0,0.05);
-        }
+/* ---------- hero: the boarding pass ---------- */
+.hero{padding-top:36px}
+.ticket{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 270px;background:var(--paper);border-radius:22px;
+  box-shadow:0 1px 0 var(--line),0 28px 60px -28px rgba(16,27,51,.45);overflow:hidden}
+.ticket::before,.ticket::after{content:"";position:absolute;width:30px;height:30px;border-radius:50%;background:var(--sky);right:255px;z-index:2}
+.ticket::before{top:-15px}.ticket::after{bottom:-15px}
+.t-main{padding:34px 38px 30px;min-width:0}
+.t-stub{padding:30px 26px;border-left:2px dashed var(--line);display:flex;flex-direction:column;gap:14px}
+.airline{display:flex;align-items:center;gap:10px;margin:0 0 18px;font-weight:650;color:var(--blue);font-variation-settings:'wdth' 85}
+.airline svg{width:22px;height:22px}
+h1{margin:0;font-size:clamp(2.2rem,10.2vw,5.6rem);line-height:.86;font-weight:800;letter-spacing:-.035em;
+  font-variation-settings:'opsz' 96,'wdth' 75}
+.route{display:flex;align-items:center;gap:12px;margin:26px 0 22px;font-size:clamp(1rem,3.4vw,1.5rem);font-weight:650;
+  font-variation-settings:'wdth' 80}
+.route .line{flex:1;height:0;border-top:2px dotted var(--ink);position:relative;min-width:24px}
+.route .line svg{position:absolute;left:50%;top:-11px;width:22px;height:22px;transform:translateX(-50%);background:var(--paper);color:var(--red);padding:0 2px}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px 26px;margin:0}
+.fields div{min-width:0}
+.fields dt{font-size:.82rem;color:var(--muted);margin:0 0 2px;font-weight:550}
+.fields dd{margin:0;font-weight:700;font-size:1.2rem;line-height:1.2;font-variation-settings:'wdth' 90}
+.fields .wide{grid-column:1/-1}
+.stub-k{font-size:.82rem;color:var(--muted);margin:0 0 4px;font-weight:550}
+#countdown{display:flex;gap:10px;font-variation-settings:'opsz' 40,'wdth' 80}
+#countdown div{text-align:center}
+#countdown b{display:block;font-size:2.15rem;line-height:1;font-weight:760;font-variant-numeric:tabular-nums}
+#countdown small{font-size:.75rem;color:var(--muted)}
+.board-now{font-weight:760;font-size:1.4rem;font-variation-settings:'wdth' 80}
+.wa{display:block;text-align:center;text-decoration:none;background:var(--ink);color:#fff;font-weight:700;padding:13px 16px;
+  border-radius:12px;transition:background .2s,transform .2s}
+.wa:hover{background:var(--blue)}
+.wa.off{background:var(--line);color:var(--muted);pointer-events:none}
+.qr{margin:0;text-align:center}
+.qr img{display:block;width:150px;height:150px;margin:0 auto 8px;padding:10px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.qr figcaption{font-weight:650;font-size:.95rem}
+.barcode{height:54px;margin-top:auto;border-radius:3px;opacity:.9;
+  background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 9px,var(--ink) 9px 12px,transparent 12px 14px,var(--ink) 14px 15px,transparent 15px 19px)}
 
-        header h1 {
-            font-size: clamp(2.2rem, 8vw, 4rem);
-            font-family: 'Georgia', serif;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px #ff8c00;
-            animation: glowTitle 4s ease-in-out infinite;
-        }
+.bring{margin:30px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.bring li{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:14px;background:var(--paper);box-shadow:0 1px 0 var(--line)}
+.bring svg{flex:none;width:30px;height:30px;color:var(--red);margin-top:2px}
+.bring b{display:block;font-size:1.1rem;font-variation-settings:'wdth' 90}
+.bring span{color:var(--muted)}
 
-        @keyframes glowTitle {
-            0%,100% { text-shadow: 0 0 15px #ff8c00; }
-            50% { text-shadow: 0 0 40px #ff8c00; }
-        }
+/* ---------- how it works ---------- */
+.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:12px;max-width:780px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:46px 1fr;gap:16px;align-items:start;background:var(--paper);padding:18px 20px;border-radius:14px;box-shadow:0 1px 0 var(--line)}
+.steps li::before{content:counter(s);width:46px;height:46px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:780;font-size:1.25rem;font-variation-settings:'wdth' 80}
+.steps h3{margin:2px 0 4px;font-size:1.2rem;font-variation-settings:'opsz' 24,'wdth' 90}
+.steps p{margin:0;color:var(--muted)}
+.steps a{font-weight:650}
+.whogate{position:fixed;inset:0;z-index:50;background:var(--sky);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.whocard{background:var(--paper);border-radius:22px;padding:32px 30px;max-width:640px;width:100%;box-shadow:0 28px 60px -28px rgba(16,27,51,.45)}
+.whocard h2{margin:14px 0 .3em}
+.whogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:22px}
+.whogrid button{cursor:pointer;font:inherit;font-weight:700;font-variation-settings:'wdth' 90;padding:12px 10px 14px;border-radius:12px;
+  border:1.5px solid var(--line);background:var(--paper);color:var(--ink);transition:border-color .15s,transform .15s;
+  display:flex;flex-direction:column;align-items:center;gap:9px}
+.mug{width:62px;height:62px;border-radius:50%;overflow:hidden;background:#D5DEE9;display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;font-weight:800;color:var(--blue);font-variation-settings:'opsz' 36,'wdth' 80}
+.mug img{width:100%;height:100%;object-fit:cover;display:block}
+.whogrid button:hover{border-color:var(--blue);transform:translateY(-1px)}
+.youare{background:var(--ink);color:#fff;border-radius:14px;padding:16px 20px;margin:0 0 16px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:baseline;justify-content:space-between}
+.youare b{font-size:1.2rem;font-variation-settings:'wdth' 85}
+.youare .cur{color:var(--signal);font-weight:700}
+.youare button{cursor:pointer;font:inherit;font-size:.9rem;background:none;border:0;color:#9FB0CF;text-decoration:underline;padding:0}
+.youare button:hover{color:#fff}
+.lock-line{margin:-.6em 0 1.2em;font-weight:650;color:var(--red)}
+.stepbtn{display:inline-block;margin-top:12px;padding:9px 18px;border-radius:999px;background:var(--ink);color:#fff!important;text-decoration:none}
+.stepbtn:hover{background:var(--blue)}
 
-        header p {
-            font-size: clamp(1rem, 4vw, 1.3rem);
-            margin-top: 10px;
-        }
+/* ---------- departure board (the draw) ---------- */
+.board{background:var(--ink);color:var(--signal);border-radius:18px;padding:10px 22px;box-shadow:0 24px 50px -30px rgba(16,27,51,.7)}
+.leg{display:grid;grid-template-columns:150px 1fr;gap:12px 18px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,199,44,.18)}
+.leg:last-of-type{border-bottom:0}
+.leg-name{color:#fff;font-weight:700;font-size:1.25rem;font-variation-settings:'wdth' 80;line-height:1.1}
+.leg-name small{display:block;color:#9FB0CF;font-weight:500;font-size:.85rem;margin-top:3px;font-variation-settings:'wdth' 100}
+.flap{min-height:58px;width:100%;display:flex;flex-wrap:wrap;align-content:center;gap:6px 16px;padding:8px 12px;border-radius:10px;
+  background:#0A1226;border:1px solid rgba(255,199,44,.25);color:var(--signal);font:inherit;text-align:left;cursor:pointer;
+  font-weight:700;font-variation-settings:'wdth' 80}
+.flap:hover{border-color:var(--signal)}
+.flap[data-done]{cursor:default}
+.flaprow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.flap .hint{color:#8EA0C4;font-weight:500;font-variation-settings:'wdth' 100}
+.word{display:inline-flex;gap:3px;white-space:nowrap}
+.cell{display:inline-block;min-width:.72em;padding:3px 3px;border-radius:3px;background:linear-gradient(#17223F 49%,#0E1730 51%);text-align:center;font-size:1.15rem;line-height:1.1}
+.cell.gap{background:none;min-width:.4em}
+.board-foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 0 8px;color:#9FB0CF;font-size:.95rem}
+.btn{cursor:pointer;border:0;background:var(--signal);color:var(--ink);font:inherit;font-weight:700;padding:11px 20px;border-radius:999px;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.dark{background:var(--ink);color:#fff}
 
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
-            background: rgba(100,40,0,0.9);
-            border-radius: 10px;
-            border: 1px solid rgba(255,140,0,0.3);
-            animation: pulseBorder 3s infinite;
-            backdrop-filter: blur(4px);
-        }
+/* ---------- map ---------- */
+.claim{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;margin-bottom:10px}
+.claim label{display:block;font-size:.85rem;color:var(--muted);font-weight:600;margin-bottom:4px}
+select{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;appearance:auto}
+#msg{min-height:1.5em;margin:6px 0 12px;font-weight:600}
+[hidden]{display:none!important}
+.next{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;background:var(--signal);color:var(--ink);padding:16px 20px;border-radius:14px;margin:0 0 14px}
+.next p{margin:0;max-width:52ch}
+#mapWrap{position:relative;border-radius:18px;background:var(--ink);overflow:hidden;box-shadow:0 24px 50px -30px rgba(16,27,51,.7)}
+#mapWrap canvas{display:block;width:100%;touch-action:pan-y}
+#tip{position:absolute;pointer-events:none;background:#fff;color:var(--ink);padding:5px 10px;border-radius:8px;font-size:.85rem;font-weight:600;display:none;white-space:nowrap}
+#status{font-size:.9rem;color:var(--muted);margin:10px 2px 0}
+.globe-hint{margin:10px 2px 0;font-size:.9rem;color:var(--muted)}
+.ask{position:fixed;inset:0;z-index:60;background:rgba(16,27,51,.55);display:flex;align-items:center;justify-content:center;padding:20px}
+.askcard{background:var(--paper);border-radius:18px;padding:26px 26px 22px;max-width:420px;width:100%;box-shadow:0 28px 60px -28px rgba(16,27,51,.6)}
+.askcard h3{margin:0 0 .3em;font-size:1.5rem;font-variation-settings:'opsz' 36,'wdth' 85}
+.askcard p{margin:0 0 20px;color:var(--muted)}
+.askbtns{display:flex;flex-wrap:wrap;gap:10px}
+.btn.ghost{background:none;border:1.5px solid var(--line);color:var(--ink)}
 
-        @keyframes pulseBorder {
-            0%,100% { box-shadow: 0 0 10px #ff8c0033; }
-            50% { box-shadow: 0 0 25px #ff8c0099; }
-        }
+.stamps{list-style:none;padding:0;margin:26px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:22px 18px}
+.stamp{position:relative;padding:14px 14px 12px;border:3px double var(--c,var(--blue));border-radius:12px;color:var(--c,var(--blue));
+  background:rgba(251,252,253,.55);transform:rotate(var(--r,0deg));text-align:center}
+.stamp.empty{--c:#8A97AD;border-style:dashed;border-width:2px;background:none}
+.stamp img{width:46px;height:32px;object-fit:cover;border-radius:3px;display:block;margin:0 auto 6px;box-shadow:0 0 0 1px currentColor}
+.stamp .globe{font-size:1.6rem;line-height:32px;display:block;margin-bottom:6px}
+.stamp b{display:block;font-size:1.25rem;line-height:1.1;font-weight:800;font-variation-settings:'wdth' 80;letter-spacing:.01em}
+.stamp span{display:block;font-size:.88rem;font-weight:600;margin-top:3px}
+.stamp .course{margin-top:7px;padding-top:6px;border-top:1px solid currentColor;font-weight:800;font-variation-settings:'wdth' 80}
 
-        .section h2 {
-            margin-top: 0;
-            font-size: 28px;
-            color: #ff8c00;
-        }
+/* ---------- crew ---------- */
+.crew{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px}
+.pass{background:var(--paper);border-radius:12px;padding:12px;box-shadow:0 1px 0 var(--line)}
+.photo{aspect-ratio:3/4;border-radius:6px;background:#D5DEE9;overflow:hidden;display:flex;align-items:center;justify-content:center;
+  font-size:3rem;font-weight:800;color:var(--blue);font-variation-settings:'opsz' 96,'wdth' 80}
+.photo img{width:100%;height:100%;object-fit:cover}
+.pass b{display:block;margin-top:9px;font-size:1.1rem;font-variation-settings:'wdth' 90}
+.pass small{color:var(--muted)}
+.gallery{display:flex;gap:14px;overflow-x:auto;padding:10px 0 6px;scroll-snap-type:x mandatory}
+.gallery figure{margin:0;flex:0 0 auto;scroll-snap-align:start;width:230px;background:var(--paper);padding:10px 10px 14px;border-radius:6px;box-shadow:0 8px 20px -12px rgba(16,27,51,.5)}
+.gallery img{width:100%;height:270px;object-fit:cover;border-radius:3px;display:block}
+.gallery figcaption{margin-top:8px;font-weight:600;font-size:.95rem}
 
-        ul {
-            list-style: none;
-            padding: 0;
-        }
+footer{margin-top:70px;text-align:center;color:var(--muted);padding:0 20px 28px;font-size:.95rem}
+footer .airmail{margin:0 -20px 24px}
 
-        ul li {
-            padding: 8px 0;
-            font-size: 18px;
-            transition: transform 0.2s ease, color 0.3s;
-        }
-
-        ul li:hover {
-            transform: translateX(1em);
-            color: #ff8c00;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            background: #5c1a00;
-            color: #ffe6cc;
-        }
-
-        #flagsArea {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .flagFloat {
-            position: absolute;
-            width: 2em;
-            height: 1.4em;
-            border-radius: 0.2em;
-            box-shadow: 0 0 0.6em #ff8c0055;
-        }
-    </style>
+@media (max-width:820px){
+  .ticket{grid-template-columns:1fr}
+  .ticket::before,.ticket::after{right:auto;top:auto;bottom:auto}
+  .t-stub{border-left:0;border-top:2px dashed var(--line);flex-direction:column}
+  .ticket::before{left:-15px;top:auto;bottom:var(--seam,240px)}
+  .ticket::after{right:-15px;left:auto;bottom:var(--seam,240px)}
+  .t-main{padding:26px 22px}
+  .leg{grid-template-columns:1fr;gap:10px}
+  .cell{font-size:1rem;padding:3px 2px}
+  .claim{grid-template-columns:1fr}
+  .barcode{margin-top:6px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
+<div class="airmail" aria-hidden="true"></div>
 
-<header>
-    <h2>You are invited to...</h2>
-    <h1>Friendsgiving</h1>
-    <h1>Potluck</h1>
-    <p>Date: Saturday 20th December</p>
-    <p>Time: 5pm</p>
-    <p>Location: 7 Pynnacles Cl, London, Stanmore HA7 4AF</p>
-</header>
-
-<div class="container">
-    <div class="section">
-        <h2>Please Bring:</h2>
-        <ul>
-            <li>A traditional dish from a country of your choice <strong>that you and only you can make 👀</strong></li>
-            <li>A game (card game, board game, etc) <strong>No Strip poker Kieran...</strong></li>
-            <li>Drinks</li>
-            <li>A Special Flower/ Herb 🪴</li>
-            <li>Good vibes 🕺🏾</li>
-        </ul>
-        <p style="font-size: 20px; margin-bottom: 20px;"><a href="https://www.icloud.com/invites/0840wvlVETvu5ONAq9MoTsmlg" target="_blank" style="color:#ff8c00; text-decoration: underline; font-weight: bold;">RSVP Here</a></p>
-    </div>
+<div id="whoGate" class="whogate" hidden>
+  <div class="whocard">
+    <p class="airline"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg> Friendsgiving Airways</p>
+    <h2>Who's checking in?</h2>
+    <p class="lede">Tap your face and we'll bring up your course, your teammate and your country.</p>
+    <div class="whogrid" id="whoGrid"></div>
+  </div>
 </div>
 
+<main>
+<!-- ============ HERO: BOARDING PASS ============ -->
+<section class="hero" aria-labelledby="title">
+  <article class="ticket" id="ticket">
+    <div class="t-main">
+      <p class="airline">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>
+        Friendsgiving Airways, boarding pass
+      </p>
+      <h1 id="title">Friendsgiving<br>Potluck</h1>
+      <div class="route" aria-label="From Stanmore to everywhere">
+        <span>Stanmore</span>
+        <span class="line"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="transform:translateX(-50%) rotate(90deg)"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></span>
+        <span>Everywhere</span>
+      </div>
+      <dl class="fields">
+        <div><dt>Date</dt><dd id="fDate"></dd></div>
+        <div><dt>Boarding</dt><dd id="fTime"></dd></div>
+        <div><dt>Hosted by</dt><dd id="fHosts"></dd></div>
+        <div class="wide"><dt>Departure gate</dt><dd id="fPlace"></dd></div>
+      </dl>
+    </div>
+    <aside class="t-stub" id="stub">
+      <div>
+        <p class="stub-k">Departs in</p>
+        <div id="countdown"></div>
+      </div>
+      <figure class="qr">
+        <img src="whatsapp-qr.png" width="150" height="150" alt="QR code that opens the Friendsgiving group chat on WhatsApp">
+        <figcaption>Scan to join the group chat</figcaption>
+      </figure>
+      <a id="waBtn" class="wa" target="_blank" rel="noopener">Can't scan? Tap to join</a>
+    </aside>
+  </article>
+
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" aria-labelledby="howH">
+  <h2 id="howH">How it works</h2>
+  <p class="lede">Everyone cooks a dish from a country they'd love to visit in the future.</p>
+  <ol class="steps">
+    <li><div><h3>Join the group chat</h3>
+      <p>Scan the code above or tap the button. Dietary requirements, allergies and timings all get sorted there.</p>
+      <a class="stepbtn" id="stepWa" target="_blank" rel="noopener">Join on WhatsApp</a></div></li>
+    <li><div><h3>Pick your country</h3>
+      <p>Check in with your name, liaise with your partner, then <a href="#pick">claim a country</a> you'd love to visit. Kieran, Monty and Anvay can share one country or take their own. Picks lock on <span class="lockText"></span>.</p></div></li>
+    <li><div><h3>Check your course</h3>
+      <p><a href="#gate">The board</a> shows who's on starters, mains and dessert, and every country picked so far.</p></div></li>
+    <li><div><h3>Cook and bring</h3>
+      <p>A dish from your country for your course, plus a drink from the same country. Post your dish in the chat by <span class="lockText"></span>, with any allergies.</p></div></li>
+    <li><div><h3>Come hungry</h3>
+      <p>Friday 4th December, 7pm. Starters, then mains, then dessert.</p></div></li>
+  </ol>
+</section>
+
+<!-- ============ MAP ============ -->
+<section id="pick" aria-labelledby="mapH">
+  <h2 id="mapH">Pick where you're flying</h2>
+  <p class="lede">Choose your group and the country you're cooking from. Once a group claims a country it's off the board for everyone else, unless that group changes it and frees it up again. Every pick shows here for everyone, so keep an eye on the map and the chat and build the menu together.</p>
+  <p class="lock-line" id="lockLine"></p>
+  <div class="youare" id="youAre" hidden></div>
+  <div class="claim">
+    <div><label for="groupSel">Your group</label><select id="groupSel"></select></div>
+    <div><label for="countrySel">Your country</label><select id="countrySel"></select></div>
+    <button class="btn dark" id="claimBtn">Claim this country</button>
+  </div>
+  <div id="msg" role="status" aria-live="polite"></div>
+  <div class="next" id="next" hidden>
+    <p><b>Next step: join the group chat.</b> That's where we sort dietary requirements, allergies, timings and who's bringing what.</p>
+    <a class="btn dark" id="nextWa" target="_blank" rel="noopener" style="text-decoration:none">Join on WhatsApp</a>
+  </div>
+  <div id="mapWrap"><div id="tip"></div></div>
+  <p class="globe-hint">Drag the globe to spin it, or tap a country to cook from there.</p>
+
+  <div class="ask" id="ask" hidden>
+    <div class="askcard" role="dialog" aria-modal="true" aria-labelledby="askTitle">
+      <h3 id="askTitle"></h3>
+      <p id="askBody"></p>
+      <div class="askbtns" id="askBtns"></div>
+    </div>
+  </div>
+  <div id="status"></div>
+  <ul class="stamps" id="stamps"></ul>
+</section>
+
+<!-- ============ THE DRAW ============ -->
+<section id="gate" aria-labelledby="drawH">
+  <h2 id="drawH">Check your gate</h2>
+  <p class="lede">The draw was random and it's final. Starters and mains have two groups each; Kieran, Monty and Anvay are all on dessert, together or separately as they like.</p>
+  <div class="board" id="board">
+    <div id="legs"></div>
+    <div class="board-foot">
+      <span>Tap a panel to see who's cooking it.</span>
+      <button class="btn" id="revealAll">Reveal the whole board</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CREW ============ -->
+<section aria-labelledby="crewH">
+  <h2 id="crewH">Who's on the flight</h2>
+  <div class="crew" id="crew"></div>
+  <div id="galWrap" hidden>
+    <h2 style="margin-top:44px">Previous trips</h2>
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+</main>
+
 <footer>
-    Coded in Visual Studio Code by yours truly. Built with HTML and CSS, deployed with GitHub.
+  <div class="airmail" aria-hidden="true"></div>
+  Built by FSJ Solutions
 </footer>
 
-<div id="flagsArea"></div>
-
+<script src="d3-geo.js"></script>
+<script src="world.js"></script>
 <script>
-    const flags = ['gb','us','ng','jm','gh','za','ca','fr','es','it','in','cn','de','br','ke','tr','jp','kr','au','mx','se','no','fi'];
-    const fa = document.getElementById('flagsArea');
+/* =============================================================
+   EDIT THIS BLOCK. Everything on the page comes from here.
+   ============================================================= */
+const CONFIG = {
+  date:     "Friday 4th December",
+  dateISO:  "2026-12-04T19:00:00",       // powers the countdown (London time)
+  time:     "7pm",
+  place:    "7 Pynnacles Cl, London, Stanmore HA7 4AF",
+  hosts:    "Dhyaan & Favour",
+  lockISO:  "2026-11-27T00:00:00+00:00",  // country picks lock here (also enforced by the database rules, see README.md)
+  lockText: "27th November",
+  whatsapp: "https://chat.whatsapp.com/LvTdQFPV3U17CkXIvmyaHa?s=cl&p=i&iam=2",
+  // Live claims (Firebase Realtime Database URL). Leave "" for local demo mode. See README.md.
+  firebaseUrl: "https://friendsgiving-potluck-2026-default-rtdb.europe-west1.firebasedatabase.app"
+};
 
-    class Flag {
-        constructor(code) {
-            this.img = document.createElement('img');
-            this.img.src = `https://flagcdn.com/${code}.svg`;
-            this.img.classList.add('flagFloat');
-            this.x = Math.random() * window.innerWidth;
-            this.y = Math.random() * window.innerHeight;
-            this.vx = (Math.random() * 2 + 0.5) * (Math.random() < 0.5 ? 1 : -1);
-            this.vy = (Math.random() * 2 + 0.5) * (Math.random() < 0.5 ? 1 : -1);
-            fa.appendChild(this.img);
-        }
+// Who cooks with whom, and the course each one drew (random, final).
+// `team` means those groups are allowed to share one country if they want to.
+const GROUPS = [
+  {id:"g1", name:"Dhyaan & Neha",  course:"main",    people:["Dhyaan","Neha"]},
+  {id:"g2", name:"Favour & Marli", course:"starter", people:["Favour","Marli"]},
+  {id:"g3", name:"Oscar & Anna",   course:"main",    people:["Oscar","Anna"]},
+  {id:"g4", name:"Adom & Ruchira", course:"starter", people:["Adom","Ruchira"]},
+  {id:"g5", name:"Kieran",         course:"dessert", people:["Kieran"], team:"pud"},
+  {id:"g6", name:"Monty",          course:"dessert", people:["Monty"],  team:"pud"},
+  {id:"g7", name:"Anvay",          course:"dessert", people:["Anvay"],  team:"pud"}
+];
 
-        move() {
-            this.x += this.vx;
-            this.y += this.vy;
-            if (this.x <= 0 || this.x + this.img.width >= window.innerWidth) this.vx *= -1;
-            if (this.y <= 0 || this.y + this.img.height >= window.innerHeight) this.vy *= -1;
-            this.img.style.left = this.x + 'px';
-            this.img.style.top = this.y + 'px';
-        }
+// Photos from past years: {src:"photos/2025.jpg", caption:"Friendsgiving 2025"}
+const GALLERY = [];
+/* ============================================================= */
+
+const courseLabel = {starter:'Starters', main:'Mains', dessert:'Desserts'};
+const LEGS = [
+  {key:"starter", gate:"Gate A", label:"Starters"},
+  {key:"main",    gate:"Gate B", label:"Mains"},
+  {key:"dessert", gate:"Gate C", label:"Desserts"}
+];
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- ticket ---------- */
+$('fDate').textContent = CONFIG.date;
+$('fTime').textContent = CONFIG.time;
+$('fHosts').textContent = CONFIG.hosts;
+$('fPlace').textContent = CONFIG.place;
+if (CONFIG.whatsapp) { $('waBtn').href = CONFIG.whatsapp; $('stepWa').href = CONFIG.whatsapp; }
+else { $('waBtn').classList.add('off'); $('waBtn').textContent = 'Group chat link coming soon'; $('stepWa').hidden = true; }
+
+// mobile: line the two ticket notches up with the dashed seam
+function placeNotches(){
+  const t = $('ticket'), stub = $('stub');
+  t.style.setProperty('--seam', (stub.offsetHeight - 15) + 'px');
+}
+placeNotches(); addEventListener('resize', placeNotches);
+
+function tick(){
+  const cd = $('countdown');
+  const ms = new Date(CONFIG.dateISO) - new Date();
+  if (isNaN(ms)) { cd.textContent = ''; return; }
+  if (ms <= 0) { cd.innerHTML = '<span class="board-now">Now boarding</span>'; return; }
+  const s = Math.floor(ms/1000);
+  const parts = [[Math.floor(s/86400),'days'],[Math.floor(s%86400/3600),'hrs'],[Math.floor(s%3600/60),'mins'],[s%60,'secs']];
+  cd.innerHTML = parts.map(([v,l]) => `<div><b>${String(v).padStart(2,'0')}</b><small>${l}</small></div>`).join('');
+}
+tick(); setInterval(tick, 1000); setTimeout(placeNotches, 50);
+
+/* ---------- departure board (the draw) ---------- */
+function buildBoard(){
+  $('legs').innerHTML = LEGS.map(l => {
+    const gs = GROUPS.filter(g => g.course === l.key);
+    return `<div class="leg"><div class="leg-name">${l.label}<small>${l.gate}</small></div>` +
+      `<div class="flaprow">` + gs.map(g =>
+        `<button type="button" class="flap" data-g="${g.id}" aria-label="Reveal a ${l.label.toLowerCase()} group">` +
+        `<span class="hint">Tap to reveal</span></button>`).join('') + `</div></div>`;
+  }).join('');
+  document.querySelectorAll('.flap').forEach(el => el.addEventListener('click', () => reveal(el)));
+}
+function reveal(el){
+  if (el.dataset.done) return;
+  el.dataset.done = 1;
+  flip(el, GROUPS.find(g => g.id === el.dataset.g).name);
+}
+function revealAll(){
+  [...document.querySelectorAll('.flap:not([data-done])')].forEach((el, i) => setTimeout(() => reveal(el), i * 280));
+}
+buildBoard();
+
+function flip(el, text){
+  const word = text.toUpperCase();
+  el.innerHTML = '';
+  const cells = [];                       // [cell, final character], words kept together so names wrap cleanly
+  word.split(' ').forEach(w => {
+    const wrap = document.createElement('span'); wrap.className = 'word'; el.appendChild(wrap);
+    [...w].forEach(ch => { const s = document.createElement('span'); s.className = 'cell'; wrap.appendChild(s); cells.push([s, ch]); });
+  });
+  el.setAttribute('aria-label', text);
+  const pool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ&';
+  cells.forEach(([s, ch], i) => {
+    if (reduced) { s.textContent = ch; return; }
+    let n = 0; const total = 6 + i * 2;
+    const t = setInterval(() => {
+      n++; s.textContent = n >= total ? ch : pool[Math.random() * pool.length | 0];
+      if (n >= total) clearInterval(t);
+    }, 55);
+  });
+}
+$('revealAll').onclick = revealAll;
+
+/* ---------- storage: Firebase REST, or localStorage demo ---------- */
+const Store = (() => {
+  const base = CONFIG.firebaseUrl.replace(/\/$/, '');
+  const LS = 'fg26-claims';
+  return {
+    live: !!base,
+    async all(){
+      if (base) { const r = await fetch(base + '/claims.json'); if (!r.ok) throw new Error('read ' + r.status); return (await r.json()) || {}; }
+      try { return JSON.parse(localStorage.getItem(LS)) || {}; } catch { return {}; }
+    },
+    async set(gid, country){
+      if (base) {
+        const r = await fetch(`${base}/claims/${gid}.json`, {method:'PUT', body: JSON.stringify({country, ts: Date.now()})});
+        if (!r.ok) throw new Error('write ' + r.status);
+      } else {
+        const all = await this.all(); all[gid] = {country, ts: Date.now()};
+        localStorage.setItem(LS, JSON.stringify(all));
+      }
     }
+  };
+})();
 
-    const flagObjects = flags.map(code => new Flag(code));
+/* ---------- spinning globe with flight arcs (canvas, re-projected every frame) ---------- */
+const W = window.WORLD, HUB = W.hub;
+const byName = Object.fromEntries(W.countries.map(c => [c.n, c]));
+const countryNames = W.countries.map(c => c.n).sort((a, b) => a.localeCompare(b));
+const FEATURES = W.countries.map(c => ({type:'Feature', properties:{n:c.n}, geometry:c.g}));
 
-    function animateFlags() {
-        flagObjects.forEach(f => f.move());
-        requestAnimationFrame(animateFlags);
+const cv = document.createElement('canvas');
+cv.id = 'globe'; cv.setAttribute('role','img');
+cv.setAttribute('aria-label','Slowly spinning globe showing a flight path from Stanmore to each country picked');
+$('mapWrap').prepend(cv);
+const ctx = cv.getContext('2d');
+const projection = D3G.geoOrthographic().precision(0.4);
+const geo = D3G.geoPath(projection, ctx);
+const graticule = D3G.geoGraticule10();
+
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const COL = {ocean:'#0B1430', land:'#2E4470', edge:'#1B2B4D', grid:'rgba(255,255,255,.07)',
+             claimed:'#FFC72C', arc:'#ffffff', hub:'#D93A2B', text:'#ffffff', hoverLand:'#3C5894'};
+
+let size = {w:0, h:0};
+function resize(){
+  const w = $('mapWrap').clientWidth;
+  const h = Math.max(300, Math.min(Math.round(w * 0.66), 560));
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  size = {w, h};
+  cv.width = w * dpr; cv.height = h * dpr;
+  cv.style.width = w + 'px'; cv.style.height = h + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  projection.fitExtent([[26, 26], [w - 26, h - 26]], {type:'Sphere'});
+}
+resize(); addEventListener('resize', resize);
+
+// one arc per group: great circle from Stanmore to the country it picked
+const arcs = {};                       // gid -> {country, line:[[lon,lat]...] }
+function greatCircle(to){
+  const interp = D3G.geoInterpolate(HUB, to), pts = [];
+  for (let i = 0; i <= 48; i++) pts.push(interp(i / 48));
+  return pts;
+}
+function setArc(gid, countryName){
+  const c = byName[countryName]; if (!c) { delete arcs[gid]; return; }
+  const g = GROUPS.find(x => x.id === gid);
+  arcs[gid] = {country: countryName, who: g ? g.name : '', ll: c.ll, line: greatCircle(c.ll), born: performance.now()};
+}
+
+let spin = 0, tilt = 12, lastT = 0, focus = null, hovered = null, paused = false, drag = null;
+const SPIN = 4.2;                      // degrees per second
+function spinTo(ll){                   // turn the globe to a newly picked country
+  focus = {from: spin, to: -ll[0], lat: ll[1], start: performance.now(), dur: 1400};
+}
+const shortest = (a, b) => a + ((((b - a) % 360) + 540) % 360 - 180);
+
+function draw(now){
+  const dt = lastT ? (now - lastT) / 1000 : 0; lastT = now;
+  if (focus){
+    const t = Math.min(1, (now - focus.start) / focus.dur), e = t < .5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2) / 2;
+    spin = focus.from + (shortest(focus.from, focus.to) - focus.from) * e;
+    if (t >= 1) focus = null;
+  } else if (!reduced && !paused && !drag) spin += SPIN * dt;
+  projection.rotate([spin, -tilt, 0]);
+
+  ctx.clearRect(0, 0, size.w, size.h);
+  // ocean
+  ctx.beginPath(); geo({type:'Sphere'}); ctx.fillStyle = COL.ocean; ctx.fill();
+  // graticule
+  ctx.beginPath(); geo(graticule); ctx.strokeStyle = COL.grid; ctx.lineWidth = 1; ctx.stroke();
+  // land, with claimed countries lit up
+  FEATURES.forEach(f => {
+    const who = claimedBy[f.properties.n];
+    ctx.beginPath(); geo(f);
+    ctx.fillStyle = who ? COL.claimed : (f.properties.n === hovered ? COL.hoverLand : COL.land);
+    ctx.fill();
+    ctx.strokeStyle = who ? '#FFF3CC' : COL.edge; ctx.lineWidth = who ? 0.9 : 0.5; ctx.stroke();
+  });
+  // flight paths
+  ctx.strokeStyle = COL.arc; ctx.lineWidth = 1.6; ctx.lineCap = 'round';
+  Object.values(arcs).forEach(a => {
+    const grow = Math.min(1, (now - a.born) / 1500);
+    const n = reduced ? a.line.length : Math.max(2, Math.round(a.line.length * grow));
+    ctx.beginPath(); geo({type:'LineString', coordinates: a.line.slice(0, n)}); ctx.stroke();
+    if (grow < 1) {                                   // a little plane rides the growing arc
+      const p = projection(a.line[n - 1]);
+      if (p && isVisible(a.line[n - 1])) {
+        const q = projection(a.line[Math.max(0, n - 2)]);
+        plane(p, Math.atan2(p[1] - q[1], p[0] - q[0]));
+      }
     }
+  });
+  // who is flying where: one label per country, so groups sharing one are named together
+  ctx.font = '700 13px ' + css('--font');
+  ctx.lineJoin = 'round'; ctx.textAlign = 'center';
+  const labels = {};
+  Object.values(arcs).forEach(a => {
+    if (!labels[a.country]) labels[a.country] = {ll: a.ll, who: []};
+    labels[a.country].who.push(a.who);
+  });
+  Object.entries(labels).forEach(([country, l]) => {
+    if (!isVisible(l.ll)) return;
+    const [x, y] = projection(l.ll);
+    const text = `${l.who.join(' & ')} - ${country}`;
+    ctx.strokeStyle = COL.ocean; ctx.lineWidth = 3.5;
+    ctx.strokeText(text, x, y - 12);
+    ctx.fillStyle = COL.claimed; ctx.fillText(text, x, y - 12);
+  });
+  ctx.textAlign = 'start';
 
-    animateFlags();
+  // Stanmore
+  if (isVisible(HUB)){
+    const [x, y] = projection(HUB);
+    ctx.beginPath(); ctx.arc(x, y, 4.5, 0, 7); ctx.fillStyle = COL.hub; ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.6; ctx.stroke();
+    ctx.font = '700 12px ' + css('--font'); ctx.fillStyle = COL.text;
+    ctx.strokeStyle = COL.ocean; ctx.lineWidth = 3; ctx.lineJoin = 'round';
+    ctx.strokeText('Stanmore', x + 9, y - 7); ctx.fillText('Stanmore', x + 9, y - 7);
+  }
+  requestAnimationFrame(draw);
+}
+function isVisible(ll){ return D3G.geoDistance(ll, projection.invert([size.w / 2, size.h / 2])) < Math.PI / 2; }
+function plane(p, ang){
+  ctx.save(); ctx.translate(p[0], p[1]); ctx.rotate(ang + Math.PI / 2);
+  ctx.beginPath();
+  [[0,-7],[2,-2],[8,1],[8,3],[2,1.5],[1.5,6],[3.5,7.5],[3.5,9],[0,8],[-3.5,9],[-3.5,7.5],[-1.5,6],[-2,1.5],[-8,3],[-8,1],[-2,-2]]
+    .forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
+  ctx.closePath(); ctx.fillStyle = '#fff'; ctx.fill();
+  ctx.strokeStyle = COL.ocean; ctx.lineWidth = .6; ctx.stroke(); ctx.restore();
+}
+requestAnimationFrame(draw);
+
+/* pointer: hover to name a country, drag to spin the globe, click to pick */
+const tip = $('tip');
+let claimedBy = {};
+const atPointer = e => {
+  const r = cv.getBoundingClientRect();
+  const ll = projection.invert([e.clientX - r.left, e.clientY - r.top]);
+  return {ll, r, f: ll && FEATURES.find(x => D3G.geoContains(x, ll))};
+};
+cv.addEventListener('pointerdown', e => {
+  if (e.pointerType === 'mouse' && e.button !== 0) return;
+  drag = {x: e.clientX, y: e.clientY, spin0: spin, tilt0: tilt, moved: 0};
+  focus = null;
+  try { cv.setPointerCapture(e.pointerId); } catch {}
+});
+cv.addEventListener('pointermove', e => {
+  if (drag) {                                   // spinning it by hand
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    drag.moved = Math.max(drag.moved, Math.abs(dx) + Math.abs(dy));
+    spin = drag.spin0 + dx * 0.32;
+    tilt = Math.max(-85, Math.min(85, drag.tilt0 + dy * 0.28));
+    tip.style.display = 'none';
+    return;
+  }
+  if (e.pointerType !== 'mouse') return;        // no hover tooltips on touch
+  const {f, r} = atPointer(e);
+  hovered = f ? f.properties.n : null;
+  paused = !!f;
+  if (!f) { tip.style.display = 'none'; return; }
+  const who = claimedBy[hovered];
+  tip.textContent = who ? `${hovered}: ${who}` : `${hovered} - tap to cook this`;
+  tip.style.display = 'block';
+  tip.style.left = (e.clientX - r.left + 14) + 'px';
+  tip.style.top = (e.clientY - r.top + 14) + 'px';
+});
+function endDrag(e){
+  if (!drag) return;
+  const tap = drag.moved < 7;
+  drag = null;
+  try { cv.releasePointerCapture(e.pointerId); } catch {}
+  if (tap) { const {f} = atPointer(e); if (f) askClaim(f.properties.n); }
+}
+cv.addEventListener('pointerup', endDrag);
+cv.addEventListener('pointercancel', () => { drag = null; });
+cv.addEventListener('mouseleave', () => { tip.style.display = 'none'; hovered = null; paused = false; });
+
+/* ---------- tap a country: confirm, then claim it ---------- */
+function closeAsk(){ $('ask').hidden = true; }
+$('ask').addEventListener('click', e => { if (e.target.id === 'ask') closeAsk(); });
+addEventListener('keydown', e => { if (e.key === 'Escape') closeAsk(); });
+
+function askClaim(country){
+  const gid = $('groupSel').value, me = GROUPS.find(g => g.id === gid), mine = claims[gid];
+  const holder = Object.entries(claims).find(([k, v]) => v && v.country === country && k !== gid);
+  const them = holder && GROUPS.find(g => g.id === holder[0]);
+  const shared = them && them.team && me && them.team === me.team;
+  let title = country, body = '', btns = [];
+
+  if (!me) { title = 'Who are you?'; body = 'Check in with your name first and we\'ll know which group to put this against.';
+             btns = [['Check in', askWho, true]]; }
+  else if (isLocked()) { body = `Picks locked on ${CONFIG.lockText}, so countries can't be changed now.`; }
+  else if (mine && mine.country === country) { body = 'This is already your country. Tap another one if you want to change it.'; }
+  else if (them && !shared) { body = `${them.name} are cooking from ${country}. Pick another country, or ask them in the group chat.`; }
+  else {
+    body = shared ? `${them.name} picked ${country}. Cook it together?`
+         : (mine && mine.country ? `You're down for ${mine.country} at the moment. Swap to ${country}?`
+                                 : `Cook a dish from ${country} for ${courseLabel[me.course].toLowerCase()}?`);
+    btns = [[shared ? 'Yes, join them' : 'Yes, claim it', () => doClaim(country), true]];
+  }
+  $('askTitle').textContent = title;
+  $('askBody').textContent = body;
+  $('askBtns').innerHTML = '';
+  btns.concat([[btns.length ? 'Cancel' : 'Close', closeAsk, false]]).forEach(([label, fn, solid]) => {
+    const b = document.createElement('button');
+    b.className = 'btn ' + (solid ? 'dark' : 'ghost'); b.type = 'button'; b.textContent = label;
+    b.onclick = () => { closeAsk(); fn(); };
+    $('askBtns').appendChild(b);
+  });
+  $('ask').hidden = false;
+  $('askBtns').firstChild.focus();
+}
+
+/* ---------- who are you (sets the group, so a teammate's pick shows up as yours) ---------- */
+const PEOPLE = GROUPS.flatMap(g => g.people.map(n => ({name:n, gid:g.id})));
+let ME = null;
+try { const saved = localStorage.getItem('fg26-person'); if (saved && PEOPLE.some(x => x.name === saved)) ME = saved; } catch {}
+
+$('whoGrid').innerHTML = PEOPLE.map(x =>
+  `<button type="button" data-name="${esc(x.name)}">` +
+  `<span class="mug" data-i="${esc(x.name[0])}"><img alt="" src="photos/face/${x.name.toLowerCase()}.jpg"></span>` +
+  `${esc(x.name)}</button>`).join('');
+// no photo yet? fall back to the initial
+$('whoGrid').querySelectorAll('.mug').forEach(m => {
+  const img = m.querySelector('img'), fb = () => { m.classList.add('noimg'); m.textContent = m.dataset.i; };
+  img.addEventListener('error', fb);
+  if (img.complete && img.naturalWidth === 0) fb();
+});
+$('whoGrid').addEventListener('click', e => {
+  const btn = e.target.closest('button'); if (!btn) return;
+  setMe(btn.dataset.name);
+});
+function setMe(name){
+  ME = name;
+  try { localStorage.setItem('fg26-person', name); } catch {}
+  $('whoGate').hidden = true;
+  document.body.style.overflow = '';
+  $('groupSel').value = PEOPLE.find(x => x.name === name).gid;
+  render();
+}
+function askWho(){
+  $('whoGate').hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+if (!ME) askWho();
+
+/* ---------- selects ---------- */
+$('groupSel').innerHTML = '<option value="">Choose your group</option>' + GROUPS.map(g => `<option value="${g.id}">${esc(g.name)}</option>`).join('');
+$('countrySel').innerHTML = '<option value="">Choose a country</option>' + countryNames.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join('');
+if (ME) $('groupSel').value = PEOPLE.find(x => x.name === ME).gid;
+
+/* ---------- render ---------- */
+let claims = {}, firstPaint = true;
+const rot = i => ['-2.5deg','1.8deg','-1deg','2.6deg','-2deg','1.2deg'][i % 6];
+const colour = i => i % 2 ? 'var(--red)' : 'var(--blue)';
+
+function render(){
+  claimedBy = {};
+  Object.entries(claims).forEach(([gid, v]) => {
+    const g = GROUPS.find(x => x.id === gid); if (g && v && v.country) claimedBy[v.country] = g.name;
+  });
+  // arcs: add new or changed ones, drop any that were cleared
+  GROUPS.forEach(g => {
+    const v = claims[g.id], have = arcs[g.id];
+    if (v && v.country) {
+      if (!have || have.country !== v.country) {
+        setArc(g.id, v.country);
+        if (!firstPaint) spinTo(byName[v.country].ll);     // turn the globe to the new pick
+      }
+    } else if (have) delete arcs[g.id];
+  });
+  firstPaint = false;
+
+  $('stamps').innerHTML = GROUPS.map((g, i) => {
+    const v = claims[g.id], c = v && byName[v.country];
+    const course = `<span class="course">${courseLabel[g.course]}</span>`;
+    if (!c) return `<li class="stamp empty" style="--r:${rot(i)}"><span class="globe" aria-hidden="true">🌍</span><b>No country yet</b><span>${esc(g.name)}</span>${course}</li>`;
+    const flag = c.c ? `<img alt="" src="https://flagcdn.com/${c.c}.svg">` : '<span class="globe" aria-hidden="true">🌍</span>';
+    return `<li class="stamp" style="--r:${rot(i)};--c:${colour(i)}">${flag}<b>${esc(c.n)}</b><span>${esc(g.name)}</span>${course}</li>`;
+  }).join('');
+
+  const myGid = $('groupSel').value, myGroup = GROUPS.find(g => g.id === myGid), mine = claims[myGid];
+  $('next').hidden = !(mine && mine.country && CONFIG.whatsapp);   // claimed, so point them to the group chat
+  $('nextWa').href = CONFIG.whatsapp;
+
+  // a country is taken unless it's yours, or held by someone you're allowed to team up with
+  const holder = name => Object.entries(claims).find(([k, v]) => v && v.country === name && k !== myGid);
+  const shareable = gid => {
+    const them = GROUPS.find(g => g.id === gid);
+    return !!(myGroup && them && them.team && them.team === myGroup.team);
+  };
+  [...$('countrySel').options].forEach(o => {
+    if (!o.value) return;
+    const h = holder(o.value), by = h && GROUPS.find(g => g.id === h[0]);
+    o.disabled = !!h && !shareable(h[0]);
+    o.textContent = by ? `${o.value} (${by.name}${shareable(h[0]) ? ' - join them' : ''})` : o.value;
+  });
+
+  // "you are" banner
+  const ya = $('youAre');
+  if (ME && myGroup) {
+    const mates = myGroup.people.filter(n => n !== ME).join(' & ');
+    const where = mine && mine.country ? `Your country: <span class="cur">${esc(mine.country)}</span>` : 'No country picked yet';
+    ya.hidden = false;
+    ya.innerHTML = `<span><b>${esc(ME)} &middot; ${courseLabel[myGroup.course]}</b><br>` +
+      `${mates ? 'Cooking with ' + esc(mates) + '. ' : ''}${where}</span>` +
+      `<button type="button" id="notMe">Not ${esc(ME)}?</button>`;
+    $('notMe').onclick = askWho;
+  } else ya.hidden = true;
+}
+const isLocked = () => Date.now() >= new Date(CONFIG.lockISO);
+function applyLock(){
+  const locked = isLocked();
+  ['groupSel','countrySel','claimBtn'].forEach(id => $(id).disabled = locked);
+  $('lockLine').textContent = locked ? 'Picks are now locked.' : `You can change your pick until it locks on ${CONFIG.lockText}.`;
+  $('claimBtn').textContent = locked ? 'Picks are locked' : 'Claim this country';
+  document.querySelectorAll('.lockText').forEach(e => e.textContent = CONFIG.lockText);
+}
+applyLock();
+async function refresh(){
+  try {
+    applyLock(); claims = await Store.all(); render();
+    $('status').textContent = Store.live ? 'Live: everyone sees new claims within a few seconds.'
+      : 'Demo mode: claims are saved on this device only. Add your Firebase URL in CONFIG to share them.';
+  } catch (e) { $('status').textContent = 'Can\'t reach the server right now. Trying again shortly.'; }
+}
+$('groupSel').addEventListener('change', render);
+async function doClaim(country){
+  const gid = $('groupSel').value, msg = $('msg');
+  if (isLocked()) { msg.textContent = 'Picks are locked, so countries can no longer be changed.'; applyLock(); return; }
+  if (!gid)     { msg.textContent = 'Choose your group first.'; return; }
+  if (!country) { msg.textContent = 'Choose a country to claim.'; return; }
+  try {
+    claims = await Store.all();                     // re-check right before writing
+    const me = GROUPS.find(g => g.id === gid);
+    const clash = Object.entries(claims).find(([k, v]) => v && v.country === country && k !== gid);
+    const them = clash && GROUPS.find(g => g.id === clash[0]);
+    if (them && !(them.team && them.team === me.team)) {
+      msg.textContent = `${country} was just claimed by ${them.name}. Choose another country.`; render(); return;
+    }
+    await Store.set(gid, country);
+    msg.textContent = them ? `${country} it is - you're cooking it with ${them.name}.` : `${country} is yours. Safe travels!`;
+    $('countrySel').value = country;
+    await refresh();
+  } catch (e) { msg.textContent = isLocked() ? 'Picks are locked, so countries can no longer be changed.' : 'That didn\'t save. Check your connection and try again.'; }
+}
+$('claimBtn').onclick = () => doClaim($('countrySel').value);
+refresh(); setInterval(refresh, 8000);
+
+/* ---------- crew + gallery ---------- */
+// photos live at photos/<firstname-lowercase>.jpg; missing ones fall back to the initial
+function renderCrew(){
+  $('crew').innerHTML = GROUPS.flatMap(g => g.people.map(n =>
+    `<div class="pass"><div class="photo" data-i="${esc(n[0])}"><img alt="${esc(n)}" src="photos/${n.toLowerCase()}.jpg"></div>` +
+    `<b>${esc(n)}</b></div>`)).join('');
+  document.querySelectorAll('.photo').forEach(ph => {
+    const img = ph.querySelector('img'), fb = () => { ph.textContent = ph.dataset.i; };
+    img.addEventListener('error', fb);
+    if (img.complete && img.naturalWidth === 0) fb();
+  });
+}
+renderCrew();
+if (GALLERY.length) {
+  $('galWrap').hidden = false;
+  $('gallery').innerHTML = GALLERY.map(p => `<figure><img loading="lazy" src="${esc(p.src)}" alt=""><figcaption>${esc(p.caption || '')}</figcaption></figure>`).join('');
+}
 </script>
-
 </body>
 </html>
