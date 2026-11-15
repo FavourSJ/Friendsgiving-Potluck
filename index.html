@@ -1161,9 +1161,9 @@
       <section id="gate" aria-labelledby="drawH">
         <h2 id="drawH">Check your gate</h2>
         <p class="lede">
-          The draw was random and it's final. Starters and mains have two groups
-          each; Kieran, Monty and Anvay are all on dessert, together or
-          separately as they like.
+          Courses are set. Kieran, Monty and Anvay are on starters, together
+          or separately as they like; Favour &amp; Marli and Oscar &amp; Anna take
+          mains; Dhyaan &amp; Neha have dessert.
         </p>
         <div class="board" id="board">
           <div id="legs"></div>
@@ -1201,19 +1201,19 @@
           "https://friendsgiving-potluck-2026-default-rtdb.europe-west1.firebasedatabase.app",
       };
 
-      // Who cooks with whom, and the course each one drew (random, final).
+      // Who cooks with whom, and the course each group is on.
       // `team` means those groups are allowed to share one country if they want to.
       const GROUPS = [
         {
           id: "g1",
           name: "Dhyaan & Neha",
-          course: "main",
+          course: "dessert",
           people: ["Dhyaan", "Neha"],
         },
         {
           id: "g2",
           name: "Favour & Marli",
-          course: "starter",
+          course: "main",
           people: ["Favour", "Marli"],
         },
         {
@@ -1223,31 +1223,25 @@
           people: ["Oscar", "Anna"],
         },
         {
-          id: "g4",
-          name: "Adom & Ruchira",
-          course: "starter",
-          people: ["Adom", "Ruchira"],
-        },
-        {
           id: "g5",
           name: "Kieran",
-          course: "dessert",
+          course: "starter",
           people: ["Kieran"],
-          team: "pud",
+          team: "trio",
         },
         {
           id: "g6",
           name: "Monty",
-          course: "dessert",
+          course: "starter",
           people: ["Monty"],
-          team: "pud",
+          team: "trio",
         },
         {
           id: "g7",
           name: "Anvay",
-          course: "dessert",
+          course: "starter",
           people: ["Anvay"],
-          team: "pud",
+          team: "trio",
         },
       ];
       /* ============================================================= */
@@ -1401,16 +1395,25 @@
         return {
           live: !!base,
           async all() {
+            let raw;
             if (base) {
               const r = await fetch(base + "/claims.json");
               if (!r.ok) throw new Error("read " + r.status);
-              return (await r.json()) || {};
+              raw = (await r.json()) || {};
+            } else {
+              try {
+                raw = JSON.parse(localStorage.getItem(LS)) || {};
+              } catch {
+                raw = {};
+              }
             }
-            try {
-              return JSON.parse(localStorage.getItem(LS)) || {};
-            } catch {
-              return {};
-            }
+            // drop anything left behind by a group that is no longer coming,
+            // so their old country doesn't stay blocked for everyone else
+            const live = {};
+            Object.entries(raw).forEach(([gid, v]) => {
+              if (GROUPS.some((g) => g.id === gid)) live[gid] = v;
+            });
+            return live;
           },
           async set(gid, country) {
             if (base) {
